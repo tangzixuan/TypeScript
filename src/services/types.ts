@@ -1,6 +1,7 @@
 import {
     CancellationToken,
     CompilerHost,
+    CompilerHostSupportingResolutionCache,
     CompilerOptions,
     CustomTransformers,
     Diagnostic,
@@ -370,6 +371,7 @@ export interface LanguageServiceHost extends GetEffectiveTypeRootsHost, MinimalR
         options: CompilerOptions,
         containingSourceFile: SourceFile,
         reusedNames: readonly StringLiteralLike[] | undefined,
+        ambientModuleNames: readonly StringLiteralLike[] | undefined,
     ): readonly ResolvedModuleWithFailedLookupLocations[];
     resolveTypeReferenceDirectiveReferences?<T extends FileReference | string>(
         typeDirectiveReferences: readonly T[],
@@ -430,6 +432,10 @@ export interface LanguageServiceHost extends GetEffectiveTypeRootsHost, MinimalR
     /** @internal */ getIncompleteCompletionsCache?(): IncompleteCompletionsCache;
 
     jsDocParsingMode?: JSDocParsingMode;
+}
+
+/** @internal */
+export interface LanguageServiceHost extends CompilerHostSupportingResolutionCache {
 }
 
 /** @internal */
